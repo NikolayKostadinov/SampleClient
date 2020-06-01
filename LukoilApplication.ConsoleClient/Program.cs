@@ -39,7 +39,7 @@ namespace LukoilExpedition.ConsoleClient
             client.DefaultRequestHeaders.Accept.Add(contentType);
 
             //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Change UserName and Password !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            var userModel = new AuthenticateModel {UserName = "Administrator", Password = "P@ssw0rd"};
+            var userModel = new AuthenticateModel {UserName = "SomeUser", Password = "SomePassword"};
 
             var stringData = JsonConvert.SerializeObject(userModel);
             var contentData = new StringContent(stringData, Encoding.UTF8, "application/json");
