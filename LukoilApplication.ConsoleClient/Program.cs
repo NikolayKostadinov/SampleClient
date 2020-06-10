@@ -39,7 +39,7 @@ namespace LukoilExpedition.ConsoleClient
             client.DefaultRequestHeaders.Accept.Add(contentType);
 
             //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Change UserName and Password !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            var userModel = new AuthenticateModel {UserName = "SomeUser", Password = "SomePassword"};
+            var userModel = new AuthenticateModel { UserName = "Some User", Password = "Some Password" };
 
             var stringData = JsonConvert.SerializeObject(userModel);
             var contentData = new StringContent(stringData, Encoding.UTF8, "application/json");
@@ -55,10 +55,13 @@ namespace LukoilExpedition.ConsoleClient
             client.DefaultRequestHeaders.Add("Authorization", $"Bearer {jwtObject.Jwt}");
 
             // Make a new http request
-            contentData = new StringContent(Message, Encoding.UTF8, "application/json");
-            response = await client.PostAsync("/ExternalApi/LoadResults", contentData);
+            var OrderId = 208; 
+            response = await client.DeleteAsync($"/ExternalApi/Orders/{OrderId}");
             responsePayload = await response.Content.ReadAsStringAsync();
-            Console.WriteLine($"The Id of the created result record is: {responsePayload}");
+            if (response.IsSuccessStatusCode)
+            {
+                Console.WriteLine($"The Order Id {OrderId} was deleted successfully");
+            }
         }
 
         private static string Message => "{\"orderId\":8,\"rows\":[{\"transactionNumber\":253,\"measuringPoint\":\"001104\",\"productCode\":\"049\",\"grossObservableVolume\":1000,\"grossStandardVolume\":1020,\"mass\":900,\"averageObservableDensity\":785.2,\"averageReferenceDensity\":745.8,\"averageTemperature\":18.3,\"transactionBeginTime\":\"2020-05-20T07:47:52.084Z\",\"transactionEndTime\":\"2020-05-20T07:47:52.084Z\",\"additiveGrossObservableVolume\":0,\"additiveMass\":0,\"additiveAverageObservableDensity\":0,\"additiveAverageReferenceDensity\":0,\"additiveAverageTemperature\":0,\"markerGrossStandardVolume\":0,\"markerGrossObservableVolume\":0,\"markerMass\":0,\"markerAverageObservableDensity\":0,\"markerAverageReferenceDensity\":0,\"markerAverageTemperature\":0,\"totalizerBeginGrossObservableVolume\":123456,\"totalizerEndGrossObservableVolume\":1234567,\"totalizerBeginGrossStandartVolume\":45697,\"totalizerEndGrossStandartVolume\":45689,\"totalizerBeginMass\":58963,\"totalizerEndMass\":123568,\"id\":115},{\"transactionNumber\":254,\"measuringPoint\":\"001104\",\"productCode\":\"049\",\"grossObservableVolume\":50,\"grossStandardVolume\":20,\"mass\":10,\"averageObservableDensity\":785.2,\"averageReferenceDensity\":745.8,\"averageTemperature\":18.3,\"transactionBeginTime\":\"2020-05-20T07:47:52.084Z\",\"transactionEndTime\":\"2020-05-20T07:47:52.084Z\",\"additiveGrossObservableVolume\":0,\"additiveMass\":0,\"additiveAverageObservableDensity\":0,\"additiveAverageReferenceDensity\":0,\"additiveAverageTemperature\":0,\"markerGrossStandardVolume\":0,\"markerGrossObservableVolume\":0,\"markerMass\":0,\"markerAverageObservableDensity\":0,\"markerAverageReferenceDensity\":0,\"markerAverageTemperature\":0,\"totalizerBeginGrossObservableVolume\":123456,\"totalizerEndGrossObservableVolume\":1234567,\"totalizerBeginGrossStandartVolume\":45697,\"totalizerEndGrossStandartVolume\":45689,\"totalizerBeginMass\":58963,\"totalizerEndMass\":123568,\"id\":116}],\"grossObservableVolume\":1050,\"grossStandardVolume\":1040,\"mass\":910,\"averageObservableDensity\":785.2,\"averageReferenceDensity\":745.8,\"averageTemperature\":18.3,\"additiveGrossObservableVolume\":0,\"additiveGrossStandardVolume\":0,\"additiveMass\":0,\"additiveAverageObservableDensity\":0,\"additiveAverageReferenceDensity\":0,\"additiveAverageTemperature\":0,\"markerGrossObservableVolume\":0,\"markerGrossStandardVolume\":0,\"markerMass\":0,\"markerAverageObservableDensity\":0,\"markerAverageReferenceDensity\":0,\"markerAverageTemperature\":0,\"id\":8,\"isValid\":true,\"modifiedOn\":\"2020-05-20T07:47:52.084Z\"}";
